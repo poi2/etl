@@ -242,8 +242,9 @@ impl PgReplicationClient {
         if pg_connection_config.tls.enabled {
             let mut root_certs_reader =
                 BufReader::new(pg_connection_config.tls.trusted_root_certs.as_bytes());
-            for cert in rustls_pemfile::certs(&mut root_certs_reader) {
-                let cert = cert?;
+            let certs =
+                rustls_pemfile::certs(&mut root_certs_reader).collect::<Result<Vec<_>, _>>()?;
+            for cert in certs {
                 root_store.add(cert)?;
             }
         };

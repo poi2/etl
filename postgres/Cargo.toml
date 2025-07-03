@@ -3,12 +3,17 @@ name = "postgres"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+test-utils = []
+tokio = []
+sqlx = []
+
 [dependencies]
 config = { workspace = true }
 pg_escape = { workspace = true }
 rustls = { workspace = true }
-serde = { workspace = true, features = ["derive"] }
 secrecy = { workspace = true, features = ["serde", "alloc"] }
+serde = { workspace = true, features = ["derive"] }
 sqlx = { workspace = true, features = [
     "runtime-tokio-rustls",
     "macros",
@@ -24,9 +29,3 @@ tokio-postgres = { workspace = true, features = [
     "with-serde_json-1",
 ] }
 tracing = { workspace = true }
-
-
-[features]
-test-utils = []
-tokio = []
-sqlx = []
