@@ -1,4 +1,4 @@
-use rand::distr::{slice::Choose, Distribution};
+use rand::distr::{Distribution, slice::Choose};
 
 /// Generates a random alphabetic string of length `len`
 pub fn generate_random_alpha_str(len: usize) -> String {

@@ -8,7 +8,7 @@ use tracing::error;
 
 use crate::{conversions::text::TextFormatConverter, pipeline::batching::BatchBoundaryV1};
 
-use super::{text::FromTextError, Cell};
+use super::{Cell, text::FromTextError};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct TableRow {

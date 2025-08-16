@@ -1,7 +1,7 @@
 use config::shared::{IntoConnectOptions, PgConnectionConfig};
 use sqlx::{
-    postgres::{PgConnectOptions, PgPoolOptions},
     Executor,
+    postgres::{PgConnectOptions, PgPoolOptions},
 };
 
 const NUM_POOL_CONNECTIONS: u32 = 1;

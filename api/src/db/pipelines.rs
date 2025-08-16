@@ -3,9 +3,9 @@ use serde::{Deserialize, Serialize};
 use sqlx::{PgPool, Postgres, Transaction};
 use thiserror::Error;
 
-use crate::db::replicators::{create_replicator_txn, ReplicatorsDbError};
+use crate::db::replicators::{ReplicatorsDbError, create_replicator_txn};
 use crate::db::serde::{
-    deserialize_from_value, serialize, DbDeserializationError, DbSerializationError,
+    DbDeserializationError, DbSerializationError, deserialize_from_value, serialize,
 };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

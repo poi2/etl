@@ -27,18 +27,15 @@ pub async fn start_replicator() -> anyhow::Result<()> {
     let pipeline_id = replicator_config.pipeline.id;
     let pipeline_config = replicator_config.pipeline;
 
-    let pipeline = Pipeline::new(
-        pipeline_id,
-        pipeline_config,
-        state_store,
-        destination,
-    );
+    let pipeline = Pipeline::new(pipeline_id, pipeline_config, state_store, destination);
     start_pipeline(pipeline).await?;
 
     Ok(())
 }
 
-async fn init_state_store(config: &ReplicatorConfig) -> anyhow::Result<impl StateStore + Clone + use<>> {
+async fn init_state_store(
+    config: &ReplicatorConfig,
+) -> anyhow::Result<impl StateStore + Clone + use<>> {
     migrate_state_store(config.pipeline.pg_connection.clone()).await?;
     Ok(PostgresStateStore::new(
         config.pipeline.id,
