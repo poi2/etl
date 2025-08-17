@@ -1,7 +1,7 @@
 [package]
 name = "replicator"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 config = { workspace = true }
@@ -10,12 +10,12 @@ postgres = { workspace = true, features = ["tokio"] }
 telemetry = { workspace = true }
 
 anyhow = { workspace = true, features = ["std"] }
-thiserror = { workspace = true }
 secrecy = { workspace = true }
 sqlx = { workspace = true, features = [
     "runtime-tokio-rustls",
     "postgres",
     "migrate",
 ] }
+thiserror = { workspace = true }
 tokio = { workspace = true, features = ["rt-multi-thread", "macros", "signal"] }
 tracing = { workspace = true, default-features = true }

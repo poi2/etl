@@ -4,7 +4,7 @@ use thiserror::Error;
 use tokio::sync::watch;
 use tracing::{error, info};
 
-use crate::v2::concurrency::shutdown::{create_shutdown_channel, ShutdownTx};
+use crate::v2::concurrency::shutdown::{ShutdownTx, create_shutdown_channel};
 use crate::v2::destination::base::{Destination, DestinationError};
 use crate::v2::replication::client::{PgReplicationClient, PgReplicationError};
 use crate::v2::schema::cache::SchemaCache;
@@ -16,7 +16,9 @@ use crate::v2::workers::pool::TableSyncWorkerPool;
 
 #[derive(Debug, Error)]
 pub enum PipelineError {
-    #[error("Both the apply worker and table sync workers failed. Apply worker error: {0}, Table sync workers errors: {1}")]
+    #[error(
+        "Both the apply worker and table sync workers failed. Apply worker error: {0}, Table sync workers errors: {1}"
+    )]
     BothWorkerTypesFailed(WorkerWaitError, WorkerWaitErrors),
 
     #[error("The apply worker failed: {0}")]
@@ -37,7 +39,9 @@ pub enum PipelineError {
     #[error("An error occurred in the destination: {0}")]
     Destination(#[from] DestinationError),
 
-    #[error("An error occurred while shutting down the pipeline, likely because no workers are running: {0}")]
+    #[error(
+        "An error occurred while shutting down the pipeline, likely because no workers are running: {0}"
+    )]
     ShutdownFailed(#[from] watch::error::SendError<()>),
 
     #[error("The publication '{0}' does not exist in the database")]
@@ -211,7 +215,10 @@ where
             // If there was an error in the apply worker, we want to shut down all table sync
             // workers, since without an apply worker they are lost.
             if let Err(err) = self.shutdown_tx.shutdown() {
-                info!("Shut down signal could not be delivered, likely because no workers are running: {:?}", err);
+                info!(
+                    "Shut down signal could not be delivered, likely because no workers are running: {:?}",
+                    err
+                );
             }
 
             info!("Apply worker completed with an error, shutting down table sync workers");

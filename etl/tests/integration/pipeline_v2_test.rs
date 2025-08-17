@@ -1,11 +1,11 @@
-use etl::conversions::table_row::TableRow;
 use etl::conversions::Cell;
+use etl::conversions::table_row::TableRow;
 use etl::v2::conversions::event::{Event, EventType, InsertEvent};
 use etl::v2::pipeline::{PipelineError, PipelineId};
 use etl::v2::state::table::TableReplicationPhaseType;
 use etl::v2::workers::base::WorkerWaitError;
 use postgres::schema::{ColumnSchema, TableId, TableName, TableSchema};
-use postgres::tokio::test_utils::{id_column_schema, PgDatabase, TableModification};
+use postgres::tokio::test_utils::{PgDatabase, TableModification, id_column_schema};
 use rand::random;
 use std::ops::RangeInclusive;
 use telemetry::init_test_tracing;

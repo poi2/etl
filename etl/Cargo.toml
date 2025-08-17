@@ -1,31 +1,23 @@
 [package]
 name = "etl"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[[example]]
-name = "bigquery"
-required-features = ["bigquery"]
-
-[[example]]
-name = "duckdb"
-required-features = ["duckdb"]
-
-[[example]]
-name = "stdout"
-required-features = ["stdout"]
+[features]
+bigquery = ["dep:gcp-bigquery-client", "dep:prost"]
+duckdb = ["dep:duckdb"]
+stdout = []
+# When enabled converts unknown types to bytes
+unknown_types_to_bytes = []
+default = ["unknown_types_to_bytes"]
 
 [dependencies]
-config = { workspace = true }
-postgres = { workspace = true, features = ["tokio"] }
-
 async-trait = { workspace = true }
 bigdecimal = { workspace = true, features = ["std"] }
-bytes = { workspace = true }
 byteorder = { workspace = true }
+bytes = { workspace = true }
 chrono = { workspace = true, features = ["serde"] }
+config = { workspace = true }
 duckdb = { workspace = true, optional = true }
 futures = { workspace = true }
 gcp-bigquery-client = { workspace = true, optional = true, features = [
@@ -34,12 +26,13 @@ gcp-bigquery-client = { workspace = true, optional = true, features = [
 ] }
 pg_escape = { workspace = true }
 pin-project-lite = { workspace = true }
+postgres = { workspace = true, features = ["tokio"] }
 postgres-protocol = { workspace = true }
 postgres-replication = { workspace = true }
 prost = { workspace = true, optional = true }
+rand = { workspace = true, features = ["std"] }
 rustls = { workspace = true, features = ["aws-lc-rs", "logging"] }
 rustls-pemfile = { workspace = true }
-rand = { workspace = true, features = ["std"] }
 secrecy = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true, features = ["std"] }
@@ -68,11 +61,16 @@ clap = { workspace = true, default-features = true, features = [
     "derive",
 ] }
 
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[features]
-bigquery = ["dep:gcp-bigquery-client", "dep:prost"]
-duckdb = ["dep:duckdb"]
-stdout = []
-# When enabled converts unknown types to bytes
-unknown_types_to_bytes = []
-default = ["unknown_types_to_bytes"]
+[[example]]
+name = "bigquery"
+required-features = ["bigquery"]
+
+[[example]]
+name = "duckdb"
+required-features = ["duckdb"]
+
+[[example]]
+name = "stdout"
+required-features = ["stdout"]
